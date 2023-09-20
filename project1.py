@@ -120,7 +120,7 @@ print("Let's begin!\n\n")
 
 # Get dimension input from user:
 print("Enter a dimension value as an integer from 0-100")
-dimension = int(getNumber(100, 0))
+dimension = int(getNumber(99, 0))
 print("You entered dimension value", dimension)
 
 
