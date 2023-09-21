@@ -68,31 +68,69 @@ def movePersonP4(personCoords, maxCoord):
 
 # Function to move a person by changing their coordinates (However, this needs to handle diagonal moves)
 def movePersonP8(personCoords, maxCoord):
-    # direction calls to get a random number 1 - 4 and stores it
+    # direction calls to get a random number 1 - 8 and stores it
     direction = getRandom8()
-
-    ''' Need to modify the code below to support 8 directions:'''
 
     # checks direction and moves person correspondingly:
     # direction 1 is North: if person's current y-coord is not max value, will +1
     if direction == 1:
         if personCoords[1] != maxCoord:
             personCoords[1] = personCoords[1] + 1
-
-    # direction 2 is East: if person's current x-coord is not max value, will +1
+        else: # move fail, try again:
+            movePersonP8(personCoords, maxCoord)
+            
+    # direction 2 is Northeast: if person's current x-coord and y-coord is not max value, will +1 to both
     elif direction == 2:
+        if personCoords[0] != maxCoord and personCoords[1] != maxCoord:
+            personCoords[0] = personCoords[0] + 1
+            personCoords[1] = personCoords[1] + 1
+        else: # move fail, try again:
+            movePersonP8(personCoords, maxCoord)
+
+    # direction 3 is East: if person's current x-coord is not max value, will +1
+    elif direction == 3:
         if personCoords[0] != maxCoord:
             personCoords[0] = personCoords[0] + 1
+        else: # move fail, try again:
+            movePersonP8(personCoords, maxCoord)
 
-    # direction 3 is South: if person's current y-coord is not min value (0), will -1
-    elif direction == 3:
+    # direction 4 is Southeast: if person's current x-coord is not max value and y-coord is not min value, will +1 x-coord and -1 y-coord
+    elif direction == 4:
+        if personCoords[0] != maxCoord and personCoords[1] != 0:
+            personCoords[0] = personCoords[0] + 1
+            personCoords[1] = personCoords[1] - 1
+        else: # move fail, try again:
+            movePersonP8(personCoords, maxCoord)
+
+    # direction 5 is South: if person's current y-coord is not min value (0), will -1
+    elif direction == 5:
         if personCoords[1] != 0:
             personCoords[1] = personCoords[1] - 1
+        else: # move fail, try again:
+            movePersonP8(personCoords, maxCoord)
 
-    # direction 4 is West: if person's current x-coord is not min value (0), will -1
-    elif direction == 4:
+    # direction 6 is Southwest: if person's current y-coord is not min value (0) and the persons x-coord is not min value (0), will -1 from both
+    elif direction == 6:
+        if personCoords[1] != 0 and personCoords[0] != 0:
+            personCoords[0] = personCoords[0] - 1
+            personCoords[1] = personCoords[1] - 1
+        else: # move fail, try again:
+            movePersonP8(personCoords, maxCoord)
+
+    # direction 7 is West: if person's current x-coord is not min value (0), will -1
+    elif direction == 7:
         if personCoords[0] != 0:
             personCoords[0] = personCoords[0] - 1
+        else: # move fail, try again:
+            movePersonP8(personCoords, maxCoord)
+
+    # direction 8 is Northwest: if person's current x-coord is not min value (0) and the persons y-coord is not max value, will -1 x-coord and +1 y-coord
+    elif direction == 8:
+        if personCoords[0] != 0 and personCoords[1] != maxCoord:
+            personCoords[0] = personCoords[0] - 1
+            personCoords[1] = personCoords[1] + 1
+        else: # move fail, try again:
+            movePersonP8(personCoords, maxCoord)
 
 
 # Function to check if people have met: checks by comparing coords to see if they are equal.
