@@ -1,6 +1,6 @@
 # Language: Python 3
 # Dakota Stephens, Nishant Agarwal
-# 20 September 2023
+# 22 September 2023
 # CS 4500 Intro to Software Profession
 
 # This program simulates two people walking on a 2D nxn board.
@@ -12,6 +12,7 @@
 
 import numpy as np
 import random as rd
+import csv as csv
 
 
 # FUNCTIONS #
@@ -106,41 +107,116 @@ def checkMeet(personA, personB):
 def checkPosition(person):
     print(person)
 
-
-# InputValidator function checks whether a user value is an integer in some range
-def inputValidator(userIn, maxValue, minValue):
-    # check whether user input is an integer
-    try:
-        userInteger = int(userIn)
-
-        # check if under min range
-        if (userInteger < minValue):
-            print("Please enter a value greater than", minValue)
-            return False
-
-        # check if over max range
-        if (userInteger > maxValue):
-            print("Please enter a value less than", maxValue)
-            return False
-
-        return True;
-
-    except ValueError:
-        print("Please enter a valid integer")
+# InputValidator function checks whether an integer is in some range
+def inputValidator(userInt, maxValue, minValue):
+    # check if under min range
+    if (userInt < minValue):
+        print("Please enter a value greater than", minValue)
         return False
 
+    # check if over max range
+    if (userInt > maxValue):
+        print("Please enter a value less than", maxValue)
+        return False
 
-# getNumber function retrieves a value between a range and calls inputValidator
-def getNumber(maxValue, minValue):
-    userValue = input()
+    return True;
 
-    # reprompt on bad input
-    while (not inputValidator(userValue, maxValue, minValue)):
-        print("Enter an integer from", minValue, "-", maxValue)
-        userValue = input()
+# checks whether an array contains all integers or not
+def validateInts(checkIntArray):
+    for x in checkIntArray:
+        try:
+            currentInt = int(x)
+        except ValueError:
+            return False
+    return True
 
-    return userValue
+# function to validate a given line of inupt is ascending integers
+def validateAscending(intArray):
 
+    # check if values are integers
+    if(! validateInts(intArray)):
+        print("line does not contain only integer values")
+        return False
+
+    # enumerate through the array
+    for index, x in enumerate(intArray):
+
+        # break out early to avoid index out of bounds
+        if(index == 4):
+            return True
+
+        # checking if the integers are ascending
+        if(currentInt < intArray[index + 1]):
+            print("line of integers is not ascending")
+            return False
+
+    return True
+
+# function to validate the indata.txt file
+def validateFile(fileIn):
+    # first line is 5 ascending integers of dimension
+    firstStr = fileIn.readline()
+    firstArr = firstStr.split(',')
+
+    if(len(firstArr) != 5):
+        print("First line requires 5 ascending integers")
+        return False
+    if(! validateAscending(firstArr)):
+        print("First ".rstrip())
+        return False
+
+    # second line is 3 integers P, M, R
+    secondStr = fileIn.readline()
+    secondArr = secondStr.split(',')
+
+    if(len(firstArr) != 3):
+        print("Second line requires 3 integers")
+        return False
+    if(! validateInts(secondArr)):
+        print("Second ".rstrip())
+        return False
+
+    # third line is 5 ascending integers of repetitions
+    thirdStr = fileIn.readline()
+    thirdArr = thirdStr.split(',')
+
+    if(len(thirdArr) != 5):
+        print("Third line requires 5 ascending integers")
+        return False
+    if(!validateAscending(thirdArr)):
+        print("Third ".rstrip())
+        return False
+
+    # fourth line is 3 integers D, P, M
+    fourthStr = fileIn.readline()
+    fourthArr = fourthStr.split(',')
+
+    if(len(fourthArr) != 3):
+        print("Fourth line of input requires 3 integers")
+        return False
+    if(! validateInts(fourthArr)):
+            print("Fourth ".rstrip())
+            return False
+
+    # fifth line is protocols 4,4,8,8
+    fifthStr = fileIn.readline()
+
+    if(fifthStr) != '4,4,8,8'):
+        print("Fifth line of input must be '4,4,8,8'")
+        return False
+
+    # sixth line is 3 intgers D, M, R
+    sixthStr = fileIn.readline()
+    sixthArr = sixthStr.split(',')
+
+    if(len(sixthArr) != 3):
+        print("Sixth line of input requires 3 integers")
+        return False
+    if(! validateInts(sixthArr)):
+            print("Sixth ".rstrip())
+            return False
+
+    return True
 
 def runSingleExperimentRepitition(dimension, protocol, moves):
 
@@ -232,6 +308,9 @@ print(
     "The program will track their movements as they move in cardinal directions and then tell us if they meet within the maximum moves given!")
 print("Let's begin!\n\n")
 
+
+fileIn = open("indata.txt", "r")
+validateFile(fileIn)
 
 #### Need to input file read here. ####
 
