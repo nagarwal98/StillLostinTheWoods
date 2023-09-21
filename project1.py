@@ -78,7 +78,7 @@ def movePersonP8(personCoords, maxCoord):
             personCoords[1] = personCoords[1] + 1
         else: # move fail, try again:
             movePersonP8(personCoords, maxCoord)
-            
+
     # direction 2 is Northeast: if person's current x-coord and y-coord is not max value, will +1 to both
     elif direction == 2:
         if personCoords[0] != maxCoord and personCoords[1] != maxCoord:
@@ -132,14 +132,12 @@ def movePersonP8(personCoords, maxCoord):
         else: # move fail, try again:
             movePersonP8(personCoords, maxCoord)
 
-
 # Function to check if people have met: checks by comparing coords to see if they are equal.
 def checkMeet(personA, personB):
     if np.array_equiv(personA, personB):
         return True
     else:
         return False
-
 
 # prints person's postion
 def checkPosition(person):
@@ -362,28 +360,66 @@ else:
     secondStr = fileIn.readline()
     secondArr = secondStr.split(',')
 
-    dimension = int(secondArr[0])
-    protocol = int(secondArr[1])
-    maxMoves = int(secondArr[2])
+    protocol = int(secondArr[0])
+    maxMoves = int(secondArr[1])
+    repetitions = int(secondArr[2])
 
-    for repetitionStr in firstArr:
-        repetitions = int(repetitionStr)
+    print('Experiment 1 changes the dimensions of the grid. Other variables are held constant.')
+    print('-------------------------------------------------------------------------------------')
+    print('|           | Maximum   | Number of |           | Lowest    | Highest   | Average   |')
+    print('| DIMENSIONS| Moves     | Repeats   | Protocol  | Moves     | Moves     | Moves     |')
+    print('-------------------------------------------------------------------------------------')
+    for dimensionStr in firstArr:
+        dimension = int(dimensionStr)
         low, high, avg = runExperiments(dimension, protocol, maxMoves, repetitions)
-        print(f"EXPERIMENT 1: Low: {low}, High: {high}, and Average: {avg}")
+        print('| %10d| %10d| %10d| %10d| %10d| %10d| %10f|' % (dimension, maxMoves, repetitions, protocol, low, high, avg))
 
-    # Get dimension input from user:
-    #print("Enter a dimension value as an integer from 0-99")
+    print('-------------------------------------------------------------------------------------')
+
+     ### EXPERIMENT 2 ###
+
+    thirdStr = fileIn.readline()
+    thirdArr = thirdStr.split(',')
+    fourthStr = fileIn.readline()
+    fourthArr = fourthStr.split(',')
+
+    dimension = int(fourthArr[0])
+    protocol = int(fourthArr[1])
+    maxMoves = int(fourthArr[2])
+
+    for repetitionStr in thirdArr:
+        repetitions = int(repetitionStr)
+       # low, high, avg = runExperiments(dimension, protocol, maxMoves, repetitions)
+       # print(f"EXPERIMENT 2: Low: {low}, High: {high}, and Average: {avg}")
+
+    ### EXPERIMENT 3 ###
+
+    fifthStr = fileIn.readline()
+    fifthArr = fifthStr.split(',')
+    sixthStr = fileIn.readline()
+    sixthArr = sixthStr.split(',')
+
+    dimension = int(sixthArr[0])
+    maxMoves = int(sixthArr[1])
+    repetitions = int(sixthArr[2])
+
+    for protocolStr in fifthArr:
+        protocol = int(protocolStr)
+       # low, high, avg = runExperiments(dimension, protocol, maxMoves, repetitions)
+       # print(f"EXPERIMENT 3: Low: {low}, High: {high}, and Average: {avg}")
+
+
+
+
+
+
     #dimension = int(getNumber(99, 0))
-    #print("You entered dimension value", dimension)
-
-    # Get maximum moves input from user:
-    #print("\nEnter a maxMoves value as an integer from 0-1000000")
     #maxMoves = int(getNumber(1000000, 0))
-    #print("You entered maxMoves value", maxMoves, "\n\n")
 
     # Note the input for function run runExperiements:
     # runExperiements(Dimension (0 - 99), Protocol (8 or 4), Max player moves (0 - 1Mil), Number of Simulations (# of times to repeat with the three earlier values))
     # Note, this function gives an output of low, high, and average.
+
     #low, high, avg = runExperiments(dimension, 4, maxMoves, 3)
     #print(f"EXPERIMENT 1: Low: {low}, High: {high}, and Average: {avg}")
     #low, high, avg = runExperiments(dimension, 8, maxMoves, 1)
