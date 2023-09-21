@@ -393,6 +393,7 @@ print("Let's begin!\n\n")
 
 # opening file and validating input data
 fileIn = open("indata.txt", "r")
+fileOut = open("outdata.txt", "w")
 
 if(not validateFile(fileIn)):
     print("Invalid input file format. Please try again.")
@@ -411,16 +412,23 @@ else:
     repetitions = int(secondArr[2])
 
     print('Experiment 1 changes the dimensions of the grid. Other variables are held constant.')
+    fileOut.write('Experiment 1 changes the dimensions of the grid. Other variables are held constant.\n')
     print('-------------------------------------------------------------------------------------')
+    fileOut.write('-------------------------------------------------------------------------------------\n')
     print('|           | Maximum   | Number of |           | Lowest    | Highest   | Average   |')
+    fileOut.write('|           | Maximum   | Number of |           | Lowest    | Highest   | Average   |\n')
     print('| DIMENSIONS| Moves     | Repeats   | Protocol  | Moves     | Moves     | Moves     |')
+    fileOut.write('| DIMENSIONS| Moves     | Repeats   | Protocol  | Moves     | Moves     | Moves     |\n')
     print('-------------------------------------------------------------------------------------')
+    fileOut.write('-------------------------------------------------------------------------------------\n')
     for dimensionStr in firstArr:
         dimension = int(dimensionStr)
         low, high, avg = runExperiments(dimension, protocol, maxMoves, repetitions)
-        print('| %10d| %10d| %10d| %10d| %10d| %10d| %10.2f|' % (dimension, maxMoves, repetitions, protocol, low, high, avg))
+        print('| %10d| %10d| %10d| %10d| %10d| %10d| %10f|' % (dimension, maxMoves, repetitions, protocol, low, high, avg))
+        fileOut.write('| %10d| %10d| %10d| %10d| %10d| %10d| %10f|\n' % (dimension, maxMoves, repetitions, protocol, low, high, avg))
 
     print('-------------------------------------------------------------------------------------')
+    fileOut.write('-------------------------------------------------------------------------------------\n')
 
      ### EXPERIMENT 2 ###
 
@@ -433,17 +441,10 @@ else:
     protocol = int(fourthArr[1])
     maxMoves = int(fourthArr[2])
 
-    print('\nExperiment 2 changes the number of wanderings (repeats) on each row. Other variables are held constant')
-    print('-------------------------------------------------------------------------------------')
-    print('| NUMBER OF |           | Maximum   |           | Lowest    | Highest   | Average   |')
-    print('| REPEATS   | Dimensions| Moves     | Protocol  | Moves     | Moves     | Moves     |')
-    print('-------------------------------------------------------------------------------------')
     for repetitionStr in thirdArr:
         repetitions = int(repetitionStr)
-        low, high, avg = runExperiments(dimension, protocol, maxMoves, repetitions)
-        print('| %10d| %10d| %10d| %10d| %10d| %10d| %10.2f|' % (repetitions, dimension, maxMoves, protocol, low, high, avg))
-
-    print('-------------------------------------------------------------------------------------')
+       # low, high, avg = runExperiments(dimension, protocol, maxMoves, repetitions)
+       # print(f"EXPERIMENT 2: Low: {low}, High: {high}, and Average: {avg}")
 
     ### EXPERIMENT 3 ###
 
@@ -456,18 +457,11 @@ else:
     maxMoves = int(sixthArr[1])
     repetitions = int(sixthArr[2])
 
-
-    print('\nExperiment 3 changes the protocols. Other variables are held constant.')
-    print('-------------------------------------------------------------------------------------')
-    print('|           |           | Maximum   | Number of | Lowest    | Highest   | Average   |')
-    print('| PROTOCOL  | Dimensions| Moves     | Repeats   | Moves     | Moves     | Moves     |')
-    print('-------------------------------------------------------------------------------------')
     for protocolStr in fifthArr:
         protocol = int(protocolStr)
-        low, high, avg = runExperiments(dimension, protocol, maxMoves, repetitions)
-        print('| %10d| %10d| %10d| %10d| %10d| %10d| %10.2f|' % (protocol, dimension, maxMoves, repetitions, low, high, avg))
+       # low, high, avg = runExperiments(dimension, protocol, maxMoves, repetitions)
+       # print(f"EXPERIMENT 3: Low: {low}, High: {high}, and Average: {avg}")
 
-    print('-------------------------------------------------------------------------------------')
 
 
 
