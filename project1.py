@@ -168,7 +168,7 @@ def validateInts(checkIntArray):
 
 # function to validate a given line of input is ascending integers
 def validateAscending(intArray):
-
+    
     # check if values are integers
     if(not validateInts(intArray)):
         print("line does not contain only integer values")
@@ -194,6 +194,7 @@ def validateFile(fileIn):
     if(lines != 6):
         print("Input file must have 6 lines")
         return False
+    fileIn.seek(0)
     # first line is 5 ascending integers of dimension
     firstStr = fileIn.readline()
     firstArr = firstStr.split(',')
@@ -219,7 +220,7 @@ def validateFile(fileIn):
     if(len(secondArr) != 3):
         print("Line 2 requires 3 integers")
         return False
-    if(int(secondArr[0]) != 4 or int(secondArr[0] != 8):
+    if(int(secondArr[0]) != 4 and int(secondArr[0] != 8)):
         print("Line 2 protocol number must be 4 or 8")
         return False
     if(not inputValidator(int(secondArr[1]), 1000000, 1)):
@@ -258,7 +259,7 @@ def validateFile(fileIn):
     if(not inputValidator(int(fourthArr[0]), 99, 0)):
         print("Line 4 dimension values must be in range 0-99")
         return False
-    if(int(fourthArr[1]) != 4 or int(fourthArr[1] != 8):
+    if(int(fourthArr[1]) != 4 and int(fourthArr[1] != 8)):
         print("Line 4 protocol number must be 4 or 8")
         return False
     if(not inputValidator(int(fourthArr[2]), 1000000, 1)):
@@ -452,8 +453,6 @@ else:
         protocol = int(protocolStr)
        # low, high, avg = runExperiments(dimension, protocol, maxMoves, repetitions)
        # print(f"EXPERIMENT 3: Low: {low}, High: {high}, and Average: {avg}")
-
-
 
 
 
