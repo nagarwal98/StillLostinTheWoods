@@ -140,8 +140,8 @@ def checkMeet(personA, personB):
         return False
 
 # prints person's postion
-def checkPosition(person):
-    print(person)
+#def checkPosition(person):
+#    print(person)
 
 # InputValidator function checks whether an integer is in some range
 def inputValidator(userInt, maxValue, minValue):
@@ -287,18 +287,23 @@ def runSingleExperimentRepitition(dimension, protocol, moves):
         currentMove += 1
 
     # After loop, if they met:
+    ''' Replaced the following block due to commented out code.
     if didMeet:
         # print the move that they met on:
-        print("The two did meet on move", currentMove)
+        # print("The two did meet on move", currentMove)
 
         # print Position they met at:
-        print("They met at postion:")
-        checkPosition(personA)
+        # print("They met at postion:")
+        # checkPosition(personA)
 
     else:
-        print("Unfortunately, the two did not meet! Despite moving", maxMoves, "times!")
+        # print("Unfortunately, the two did not meet! Despite moving", maxMoves, "times!")
         currentMove = maxMoves
         # This is needed because current moves is one larger than maxMoves when we run out of moves.
+    '''
+    # replaced above block with this if check:
+    if not didMeet:
+        currentMove = maxMoves
     return currentMove
 
 def calcAvg(listOfValues):
@@ -311,7 +316,7 @@ def calcAvg(listOfValues):
 
 # run R simulated wanderings in a grid of size D X D. Use protocol P for each move M
 def runExperiments(dimension, protocol, moves, numberSimulations):
-    print(f"\n******Running Experiment with dimension: {dimension}, protocol: {protocol}, and Max Moves: {moves}******\n")
+    # print(f"\n******Running Experiment with dimension: {dimension}, protocol: {protocol}, and Max Moves: {moves}******\n")
     # declare all local variables that will be returned and used.
     lowestMoves = moves
     highestMoves = 0
@@ -319,17 +324,17 @@ def runExperiments(dimension, protocol, moves, numberSimulations):
     averageMoves = 0
     # this works because range() does not include the final number in the specified range.
     for n in range(numberSimulations):
-        print(f"\nRunning Simulation {n+1} of {numberSimulations}")
+        # print(f"\nRunning Simulation {n+1} of {numberSimulations}")
         # This function outputs lowest number of moves, highest number of moves, and average number of moves.
         madeMoves = runSingleExperimentRepitition(dimension, protocol, moves)
         if(madeMoves < lowestMoves): lowestMoves = madeMoves
         if(madeMoves > highestMoves): highestMoves = madeMoves
         averageMovesItems.append(madeMoves)
-        print(f"End of Simulation {n+1} of {numberSimulations}\n")
+        # print(f"End of Simulation {n+1} of {numberSimulations}\n")
     # count up the moves made and get the average:
     averageMoves = calcAvg(averageMovesItems)
-    print(f"EXPERIMENT INFO: Low: {lowestMoves}, High: {highestMoves}, and Average: {averageMoves}")
-    print("\n******END OF EXPERIMENT******\n")
+    # print(f"EXPERIMENT INFO: Low: {lowestMoves}, High: {highestMoves}, and Average: {averageMoves}")
+    # print("\n******END OF EXPERIMENT******\n")
     return lowestMoves, highestMoves, averageMoves
 
 
