@@ -130,11 +130,11 @@ def validateInts(checkIntArray):
             return False
     return True
 
-# function to validate a given line of inupt is ascending integers
+# function to validate a given line of input is ascending integers
 def validateAscending(intArray):
 
     # check if values are integers
-    if(! validateInts(intArray)):
+    if(not validateInts(intArray)):
         print("line does not contain only integer values")
         return False
 
@@ -146,8 +146,8 @@ def validateAscending(intArray):
             return True
 
         # checking if the integers are ascending
-        if(currentInt < intArray[index + 1]):
-            print("line of integers is not ascending")
+        if(int(x) > int(intArray[index + 1])):
+            print(" line of integers is not ascending")
             return False
 
     return True
@@ -158,50 +158,50 @@ def validateFile(fileIn):
     firstStr = fileIn.readline()
     firstArr = firstStr.split(',')
 
+    if(not validateAscending(firstArr)):
+        print("First ".rstrip())
+        return False
     if(len(firstArr) != 5):
         print("First line requires 5 ascending integers")
-        return False
-    if(! validateAscending(firstArr)):
-        print("First ".rstrip())
         return False
 
     # second line is 3 integers P, M, R
     secondStr = fileIn.readline()
     secondArr = secondStr.split(',')
 
-    if(len(firstArr) != 3):
-        print("Second line requires 3 integers")
-        return False
-    if(! validateInts(secondArr)):
+    if(not validateInts(secondArr)):
         print("Second ".rstrip())
+        return False
+    if(len(secondArr) != 3):
+        print("Second line requires 3 integers")
         return False
 
     # third line is 5 ascending integers of repetitions
     thirdStr = fileIn.readline()
     thirdArr = thirdStr.split(',')
 
+    if(not validateAscending(thirdArr)):
+        print("Third ".rstrip())
+        return False
     if(len(thirdArr) != 5):
         print("Third line requires 5 ascending integers")
-        return False
-    if(!validateAscending(thirdArr)):
-        print("Third ".rstrip())
         return False
 
     # fourth line is 3 integers D, P, M
     fourthStr = fileIn.readline()
     fourthArr = fourthStr.split(',')
 
+    if(not validateInts(fourthArr)):
+            print("Fourth ".rstrip())
+            return False
     if(len(fourthArr) != 3):
         print("Fourth line of input requires 3 integers")
         return False
-    if(! validateInts(fourthArr)):
-            print("Fourth ".rstrip())
-            return False
 
     # fifth line is protocols 4,4,8,8
     fifthStr = fileIn.readline()
 
-    if(fifthStr) != '4,4,8,8'):
+    if(fifthStr.rstrip() != '4,4,8,8'):
         print("Fifth line of input must be '4,4,8,8'")
         return False
 
@@ -209,12 +209,12 @@ def validateFile(fileIn):
     sixthStr = fileIn.readline()
     sixthArr = sixthStr.split(',')
 
+    if(not validateInts(sixthArr)):
+            print("Sixth ".rstrip())
+            return False
     if(len(sixthArr) != 3):
         print("Sixth line of input requires 3 integers")
         return False
-    if(! validateInts(sixthArr)):
-            print("Sixth ".rstrip())
-            return False
 
     return True
 
@@ -309,33 +309,51 @@ print(
 print("Let's begin!\n\n")
 
 
+# opening file and validating input data
 fileIn = open("indata.txt", "r")
-validateFile(fileIn)
 
-#### Need to input file read here. ####
+if(not validateFile(fileIn)):
+    print("Invalid input file format. Please try again.")
+else:
+    fileIn.seek(0)
+
+    ### EXPERIMENT 1 ###
+
+    firstStr = fileIn.readline()
+    firstArr = firstStr.split(',')
+    secondStr = fileIn.readline()
+    secondArr = secondStr.split(',')
+
+    dimension = int(secondArr[0])
+    protocol = int(secondArr[1])
+    maxMoves = int(secondArr[2])
+
+    for repetitionStr in firstArr:
+        repetitions = int(repetitionStr)
+        low, high, avg = runExperiments(dimension, protocol, maxMoves, repetitions)
+        print(f"EXPERIMENT 1: Low: {low}, High: {high}, and Average: {avg}")
+
+    # Get dimension input from user:
+    #print("Enter a dimension value as an integer from 0-99")
+    #dimension = int(getNumber(99, 0))
+    #print("You entered dimension value", dimension)
+
+    # Get maximum moves input from user:
+    #print("\nEnter a maxMoves value as an integer from 0-1000000")
+    #maxMoves = int(getNumber(1000000, 0))
+    #print("You entered maxMoves value", maxMoves, "\n\n")
+
+    # Note the input for function run runExperiements:
+    # runExperiements(Dimension (0 - 99), Protocol (8 or 4), Max player moves (0 - 1Mil), Number of Simulations (# of times to repeat with the three earlier values))
+    # Note, this function gives an output of low, high, and average.
+    #low, high, avg = runExperiments(dimension, 4, maxMoves, 3)
+    #print(f"EXPERIMENT 1: Low: {low}, High: {high}, and Average: {avg}")
+    #low, high, avg = runExperiments(dimension, 8, maxMoves, 1)
+    #print(f"EXPERIMENT 2: Low: {low}, High: {high}, and Average: {avg}")
+    #low, high, avg = runExperiments(dimension, 4, maxMoves, 4)
+    #print(f"EXPERIMENT 3: Low: {low}, High: {high}, and Average: {avg}")
+    #low, high, avg = runExperiments(dimension, 8, maxMoves, 5)
+    #print(f"EXPERIMENT 4: Low: {low}, High: {high}, and Average: {avg}")
 
 
-# Get dimension input from user:
-print("Enter a dimension value as an integer from 0-99")
-dimension = int(getNumber(99, 0))
-print("You entered dimension value", dimension)
-
-# Get maximum moves input from user:
-print("\nEnter a maxMoves value as an integer from 0-1000000")
-maxMoves = int(getNumber(1000000, 0))
-print("You entered maxMoves value", maxMoves, "\n\n")
-
-# Note the input for function run runExperiements:
-# runExperiements(Dimension (0 - 99), Protocol (8 or 4), Max player moves (0 - 1Mil), Number of Simulations (# of times to repeat with the three earlier values))
-# Note, this function gives an output of low, high, and average.
-low, high, avg = runExperiments(dimension, 4, maxMoves, 3)
-print(f"EXPERIMENT 1: Low: {low}, High: {high}, and Average: {avg}")
-low, high, avg = runExperiments(dimension, 8, maxMoves, 1)
-print(f"EXPERIMENT 2: Low: {low}, High: {high}, and Average: {avg}")
-low, high, avg = runExperiments(dimension, 4, maxMoves, 4)
-print(f"EXPERIMENT 3: Low: {low}, High: {high}, and Average: {avg}")
-low, high, avg = runExperiments(dimension, 8, maxMoves, 5)
-print(f"EXPERIMENT 4: Low: {low}, High: {high}, and Average: {avg}")
-
-
-print("Good-bye! Thank you for playing! <(￣︶￣)>")
+    print("Good-bye! Thank you for playing! <(￣︶￣)>")
