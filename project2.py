@@ -173,7 +173,7 @@ def validateAscending(intArray):
 
     # check if values are integers
     if(not validateInts(intArray)):
-        print("Line does not contain only integer values")
+        print("Line contains an invalid integer:")
         return False
 
     # enumerate through the array
@@ -185,10 +185,10 @@ def validateAscending(intArray):
         try:
             # checking if the integers are ascending
             if(int(x) > int(intArray[index + 1])):
-                print("Line of integers is not ascending")
+                print("Line of integers is not ascending:")
                 return False
         except IndexError:
-            print("The following line does not contain the correct amount of integers.")
+            print("Line does not correct number of integers:")
             return False
 
     return True
