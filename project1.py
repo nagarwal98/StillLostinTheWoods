@@ -361,7 +361,8 @@ def runExperiments(dimension, protocol, moves, numberSimulations):
     # declare all local variables that will be returned and used.
     lowestMoves = moves
     highestMoves = 0
-    averageMovesItems = []
+    # averageMovesItems = []
+    sumMoves = 0
     averageMoves = 0
     # this works because range() does not include the final number in the specified range.
     for n in range(numberSimulations):
@@ -370,10 +371,12 @@ def runExperiments(dimension, protocol, moves, numberSimulations):
         madeMoves = runSingleExperimentRepitition(dimension, protocol, moves)
         if(madeMoves < lowestMoves): lowestMoves = madeMoves
         if(madeMoves > highestMoves): highestMoves = madeMoves
-        averageMovesItems.append(madeMoves)
+        # averageMovesItems.append(madeMoves)
+        sumMoves += madeMoves
         # print(f"End of Simulation {n+1} of {numberSimulations}\n")
     # count up the moves made and get the average:
-    averageMoves = calcAvg(averageMovesItems)
+    
+    averageMoves = sumMoves / numberSimulations # old way: calcAvg(averageMovesItems)
     # print(f"EXPERIMENT INFO: Low: {lowestMoves}, High: {highestMoves}, and Average: {averageMoves}")
     # print("\n******END OF EXPERIMENT******\n")
     return lowestMoves, highestMoves, averageMoves
@@ -440,11 +443,26 @@ else:
     dimension = int(fourthArr[0])
     protocol = int(fourthArr[1])
     maxMoves = int(fourthArr[2])
+    
+    print('Experiment 2 changes the number of wanderings (repeats) for each row. Other variables are held constant.')
+    fileOut.write('Experiment 2 changes the number of wanderings (repeats) for each row. Other variables are held constant.\n')
+    print('--------------------------------------------------------------------------------------')
+    fileOut.write('--------------------------------------------------------------------------------------\n')
+    print('| NUMBER OF |            | Maximum   |           | Lowest    | Highest   | Average   |')
+    fileOut.write('| NUMBER OF |            | Maximum   |           | Lowest    | Highest   | Average   |\n')
+    print('| REPEATS   | Dimensions | Moves     | Protocol  | Moves     | Moves     | Moves     |')
+    fileOut.write('| REPEATS   | Dimensions | Moves     | Protocol  | Moves     | Moves     | Moves     |\n')
+    print('--------------------------------------------------------------------------------------')
+    fileOut.write('--------------------------------------------------------------------------------------\n')
 
     for repetitionStr in thirdArr:
         repetitions = int(repetitionStr)
-       # low, high, avg = runExperiments(dimension, protocol, maxMoves, repetitions)
-       # print(f"EXPERIMENT 2: Low: {low}, High: {high}, and Average: {avg}")
+        low, high, avg = runExperiments(dimension, protocol, maxMoves, repetitions)
+        print('| %10d| %11d| %10d| %10d| %10d| %10d| %10f|' % (repetitions, dimension, maxMoves, protocol, low, high, avg))
+        fileOut.write('| %10d| %11d| %10d| %10d| %10d| %10d| %10f|\n' % (repetitions, dimension, maxMoves, protocol, low, high, avg))
+        
+    print('--------------------------------------------------------------------------------------')
+    fileOut.write('--------------------------------------------------------------------------------------\n')
 
     ### EXPERIMENT 3 ###
 
