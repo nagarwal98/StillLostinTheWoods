@@ -195,45 +195,85 @@ def validateAscending(intArray):
 
 # function to validate the indata.txt file
 def validateFile(fileIn):
+    try:
     # check to see whether the file contains 6 and only 6 lines
-    lines = len(fileIn.readlines())
+        lines = len(fileIn.readlines())
+    except:
+        print("File indata.txt could not be read")
+        exit()
     if(lines != 6):
         print("Input file must have 6 lines")
         return False
     fileIn.seek(0)
 
+    # Reading in all lines and storing as arrays
     # first line is 5 ascending integers of dimension
-    firstStr = fileIn.readline()
+    firstStr = fileIn.readline().strip()
     firstArr = firstStr.split(',')
+    # second line is 3 integers P, M, R
+    secondStr = fileIn.readline().strip()
+    secondArr = secondStr.split(',')
+    # third line is 5 ascending integers of repetitions
+    thirdStr = fileIn.readline().strip()
+    thirdArr = thirdStr.split(',')
+    # fourth line is 3 integers D, P, M
+    fourthStr = fileIn.readline().strip()
+    fourthArr = fourthStr.split(',')
+    # fifth line is protocols 4,4,8,8
+    fifthStr = fileIn.readline().strip()
+    # sixth line is 3 intgers D, M, R
+    sixthStr = fileIn.readline().strip()
+    sixthArr = sixthStr.split(',')
 
-    # Checking if integers are in ascending order, and they are actually integers
-    if(not validateAscending(firstArr)):
-        print("Line 1".rstrip())
-        return False
-    # Checking if there are 5 and only 5 integers
+
+    # Checking if each line length is correct
     if(len(firstArr) != 5):
         print("Line 1 requires 5 ascending integers")
         return False
+    if(len(secondArr) != 3):
+        print("Line 2 requires 3 integers")
+        return False
+    if(len(thirdArr) != 5):
+        print("Line 3 requires 5 ascending integers")
+        return False
+    if(len(fourthArr) != 3):
+        print("Line 4 of input requires 3 integers")
+        return False
+    if(len(sixthArr) != 3):
+        print("Line 6 of input requires 3 integers")
+        return False
+
+    # Checking if line 5 is correct
+    if(fifthStr.rstrip() != '4,4,8,8'):
+        print("Line 5 of input must be '4,4,8,8'")
+        return False
+
+
+    # Checking if integers are in ascending order, and they are actually integers
+    if(not validateAscending(firstArr)):
+        print("Line 1")
+        return False
+    if(not validateInts(secondArr)):
+        print("Line 2")
+        return False
+    if(not validateAscending(thirdArr)):
+        print("Line 3")
+        return False
+    if(not validateInts(fourthArr)):
+        print("Line 4")
+        return False
+    if(not validateInts(sixthArr)):
+        print("Line 6")
+        return False
+
+
     # Checking if values are in acceptable range
+    # Line 1
     for x in firstArr:
         if(not inputValidator(int(x), 99, 0)):
             print("Line 1 dimension values must be in range 0-100")
             return False
-
-    # second line is 3 integers P, M, R
-    secondStr = fileIn.readline()
-    secondArr = secondStr.split(',')
-
-    line2ReturnVal = True
-    if(not validateInts(secondArr)):
-        print("Line 2".rstrip())
-        line2ReturnVal = False
-        print(secondArr)
-    if(len(secondArr) != 3):
-        print("Line 2 requires 3 integers")
-        return False
-    if(not line2ReturnVal):
-        return line2ReturnVal
+    # Line 2
     if(int(secondArr[0]) != 4 and int(secondArr[0]) != 8):
         print("Line 2 protocol number must be 4 or 8")
         return False
@@ -243,43 +283,12 @@ def validateFile(fileIn):
     if(not inputValidator(int(secondArr[2]), 100000, 1)):
         print("Line 2 repetition values must be in range 1-100000")
         return False
-
-
-    # third line is 5 ascending integers of repetitions
-    thirdStr = fileIn.readline()
-    thirdArr = thirdStr.split(',')
-
-    line3ReturnVal = True
-    if(not validateAscending(thirdArr)):
-        print("Line 3".rstrip())
-        line3ReturnVal = False
-    if(len(thirdArr) != 5):
-        print("Line 3 requires 5 ascending integers")
-        line3ReturnVal = False
+    # Line 3
     for x in thirdArr:
-        try:
-            if(not inputValidator(int(x), 100000, 1)):
-                print("Line 3 repetition values must be in range 1-100000")
-                line3ReturnVal = False
-        except ValueError:
-            print("Line 3 Invalid/Extra character in list of integers.")
-            print("Line 3 Please make sure the format follows:\"I0,I1,I2,I3,I4\"")
-            line3ReturnVal = False
-
-    # returns line 3 failure if the line is not correct
-    if(not line3ReturnVal): 
-        return line3ReturnVal
-
-    # fourth line is 3 integers D, P, M
-    fourthStr = fileIn.readline()
-    fourthArr = fourthStr.split(',')
-
-    if(not validateInts(fourthArr)):
-        print("Line 4".rstrip())
-        return False
-    if(len(fourthArr) != 3):
-        print("Line 4 of input requires 3 integers")
-        return False
+        if(not inputValidator(int(x), 100000, 1)):
+            print("Line 3 repetition values must be in range 1-100000")
+            return False
+    # Line 4
     if(not inputValidator(int(fourthArr[0]), 99, 0)):
         print("Line 4 dimension values must be in range 0-99")
         return False
@@ -289,24 +298,7 @@ def validateFile(fileIn):
     if(not inputValidator(int(fourthArr[2]), 1000000, 1)):
         print("Line 4 max moves must be in range 1-1000000")
         return False
-
-    # fifth line is protocols 4,4,8,8
-    fifthStr = fileIn.readline()
-
-    if(fifthStr.rstrip() != '4,4,8,8'):
-        print("Line 5 of input must be '4,4,8,8'")
-        return False
-
-    # sixth line is 3 intgers D, M, R
-    sixthStr = fileIn.readline()
-    sixthArr = sixthStr.split(',')
-
-    if(not validateInts(sixthArr)):
-            print("Line 6".rstrip())
-            return False
-    if(len(sixthArr) != 3):
-        print("Line 6 of input requires 3 integers")
-        return False
+    # Line 6
     if(not inputValidator(int(sixthArr[0]), 99, 0)):
         print("Line 6 dimension values must be in range 0-99")
         return False
