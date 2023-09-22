@@ -4,15 +4,14 @@
 # CS 4500 Intro to Software Profession
 
 # This program simulates two people walking on a 2D nxn board.
-# The user enters a dimension for n and a max number of moves allowed.
-# The program will then simulate each person making a random move until they meet or the max moves is exceeded.
+# The program will run 3 experiments varying the board dimensions, the way the people move (protocol), and repetitions per Simulation
+# Input data is parsed through an indata.txt file, and output will be sent to outdata.txt
 
 # Each person is represented as a 1x2 array which holds their position on the board as an x and y coordinate, in that order.
 
 
 import numpy as np
 import random as rd
-import csv as csv
 
 
 # FUNCTIONS #
@@ -147,12 +146,10 @@ def checkMeet(personA, personB):
 def inputValidator(userInt, maxValue, minValue):
     # check if under min range
     if (userInt < minValue):
-        print("Please enter a value greater than", minValue)
         return False
 
     # check if over max range
     if (userInt > maxValue):
-        print("Please enter a value less than", maxValue)
         return False
 
     return True;
@@ -171,7 +168,7 @@ def validateAscending(intArray):
     
     # check if values are integers
     if(not validateInts(intArray)):
-        print("line does not contain only integer values")
+        print("Line does not contain only integer values")
         return False
 
     # enumerate through the array
@@ -183,7 +180,7 @@ def validateAscending(intArray):
 
         # checking if the integers are ascending
         if(int(x) > int(intArray[index + 1])):
-            print(" line of integers is not ascending")
+            print("Line of integers is not ascending")
             return False
 
     return True
@@ -390,16 +387,16 @@ def runExperiments(dimension, protocol, moves, numberSimulations):
 # Start statement:
 print("This program is a game!")
 print("There are two people lost in the woods, imagine they are on a grid coordinate system.")
-print("You will be inputting the dimension of the grid (a number between 0 and 99) so it is a 0 x dimension grid,")
-print("and you will be inputting the maximum number of times they can move (between 0 and 1,000,000).")
-print(
-    "The program will track their movements as they move in cardinal directions and then tell us if they meet within the maximum moves given!")
+print("The program will run 3 experiments based on the input data given in the file indata.txt")
 print("Let's begin!\n\n")
 
-
-# opening file and validating input data
-fileIn = open("indata.txt", "r")
-fileOut = open("outdata.txt", "w")
+try:
+    # opening file and validating input data
+    fileIn = open("indata.txt", "r")
+    fileOut = open("outdata.txt", "w")
+except:
+    print("File indata.txt could not be opened.")
+    exit()
 
 if(not validateFile(fileIn)):
     print("Invalid input file format. Please try again.")
