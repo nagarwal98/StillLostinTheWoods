@@ -254,13 +254,13 @@ def validateFile(fileIn):
         print("Line 1")
         return False
     if(not validateInts(secondArr)):
-        print("Line 2")
+        print("Line 2 requires 3 valid integers")
         return False
     if(not validateAscending(thirdArr)):
         print("Line 3")
         return False
     if(not validateInts(fourthArr)):
-        print("Line 4")
+        print("Line 4 requires 3 valid integers")
         return False
     if(not validateInts(sixthArr)):
         print("Line 6")
