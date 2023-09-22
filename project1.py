@@ -4,14 +4,15 @@
 # CS 4500 Intro to Software Profession
 
 # This program simulates two people walking on a 2D nxn board.
-# The program will run 3 experiments varying the board dimensions, the way the people move (protocol), and repetitions per Simulation
-# Input data is parsed through an indata.txt file, and output will be sent to outdata.txt
+# The user enters a dimension for n and a max number of moves allowed.
+# The program will then simulate each person making a random move until they meet or the max moves is exceeded.
 
 # Each person is represented as a 1x2 array which holds their position on the board as an x and y coordinate, in that order.
 
 
 import numpy as np
 import random as rd
+import csv as csv
 
 
 # FUNCTIONS #
@@ -198,15 +199,12 @@ def validateFile(fileIn):
     firstStr = fileIn.readline()
     firstArr = firstStr.split(',')
 
-    # Checking if integers are in ascending order, and they are actually integers
     if(not validateAscending(firstArr)):
         print("Line 1".rstrip())
         return False
-    # Checking if there are 5 and only 5 integers
     if(len(firstArr) != 5):
         print("Line 1 requires 5 ascending integers")
         return False
-    # Checking if values are in acceptable range
     for x in firstArr:
         if(not inputValidator(int(x), 99, 0)):
             print("Line 1 dimension values must be in range 0-100")
@@ -389,17 +387,16 @@ def runExperiments(dimension, protocol, moves, numberSimulations):
 # Start statement:
 print("This program is a game!")
 print("There are two people lost in the woods, imagine they are on a grid coordinate system.")
-print("The program will run 3 experiments based on the input data given in the file indata.txt")
+print("You will be inputting the dimension of the grid (a number between 0 and 99) so it is a 0 x dimension grid,")
+print("and you will be inputting the maximum number of times they can move (between 0 and 1,000,000).")
+print(
+    "The program will track their movements as they move in cardinal directions and then tell us if they meet within the maximum moves given!")
 print("Let's begin!\n\n")
 
-try:
-    # opening file and validating input data
-    fileIn = open("indata.txt", "r")
-    fileOut = open("outdata.txt", "w")
-except:
-    print("File indata.txt could not be opened.")
-    exit()
 
+# opening file and validating input data
+fileIn = open("indata.txt", "r")
+fileOut = open("outdata.txt", "w")
 
 if(not validateFile(fileIn)):
     print("Invalid input file format. Please try again.")
@@ -433,8 +430,8 @@ else:
         print('| %10d| %10d| %10d| %10d| %10d| %10d| %10f|' % (dimension, maxMoves, repetitions, protocol, low, high, avg))
         fileOut.write('| %10d| %10d| %10d| %10d| %10d| %10d| %10f|\n' % (dimension, maxMoves, repetitions, protocol, low, high, avg))
 
-    print('-------------------------------------------------------------------------------------')
-    fileOut.write('-------------------------------------------------------------------------------------\n')
+    print('-------------------------------------------------------------------------------------\n')
+    fileOut.write('-------------------------------------------------------------------------------------\n\n')
 
      ### EXPERIMENT 2 ###
 
@@ -460,12 +457,13 @@ else:
 
     for repetitionStr in thirdArr:
         repetitions = int(repetitionStr)
+        # if repetitions > 45000:  repetitions -= 45000
         low, high, avg = runExperiments(dimension, protocol, maxMoves, repetitions)
         print('| %10d| %11d| %10d| %10d| %10d| %10d| %10f|' % (repetitions, dimension, maxMoves, protocol, low, high, avg))
         fileOut.write('| %10d| %11d| %10d| %10d| %10d| %10d| %10f|\n' % (repetitions, dimension, maxMoves, protocol, low, high, avg))
         
-    print('--------------------------------------------------------------------------------------')
-    fileOut.write('--------------------------------------------------------------------------------------\n')
+    print('--------------------------------------------------------------------------------------\n')
+    fileOut.write('--------------------------------------------------------------------------------------\n\n')
 
     ### EXPERIMENT 3 ###
 
@@ -477,11 +475,26 @@ else:
     dimension = int(sixthArr[0])
     maxMoves = int(sixthArr[1])
     repetitions = int(sixthArr[2])
+    
+    print('Experiment 3 changes the protocols.  Other variables are held constant.')
+    fileOut.write('Experiment 3 changes the protocols.  Other variables are held constant.\n')
+    print('--------------------------------------------------------------------------------------')
+    fileOut.write('--------------------------------------------------------------------------------------\n')
+    print('|           |            | Maximum   |           | Lowest    | Highest   | Average   |')
+    fileOut.write('|           |            | Maximum   |           | Lowest    | Highest   | Average   |\n')
+    print('| PROTOCOL  | Dimensions | Moves     | Repeats   | Moves     | Moves     | Moves     |')
+    fileOut.write('| PROTOCOL  | Dimensions | Moves     | Repeats   | Moves     | Moves     | Moves     |\n')
+    print('--------------------------------------------------------------------------------------')
+    fileOut.write('--------------------------------------------------------------------------------------\n')
 
     for protocolStr in fifthArr:
         protocol = int(protocolStr)
-       # low, high, avg = runExperiments(dimension, protocol, maxMoves, repetitions)
-       # print(f"EXPERIMENT 3: Low: {low}, High: {high}, and Average: {avg}")
+        low, high, avg = runExperiments(dimension, protocol, maxMoves, repetitions)
+        print('| %10d| %11d| %10d| %10d| %10d| %10d| %10f|' % (protocol, dimension, maxMoves, repetitions, low, high, avg))
+        fileOut.write('| %10d| %11d| %10d| %10d| %10d| %10d| %10f|\n' % (protocol, dimension, maxMoves, repetitions, low, high, avg))
+        
+    print('--------------------------------------------------------------------------------------\n')
+    fileOut.write('--------------------------------------------------------------------------------------\n\n')
 
 
 
