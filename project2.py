@@ -3,9 +3,17 @@
 # 22 September 2023
 # CS 4500 Intro to Software Profession
 
-# This program simulates two people walking on a 2D nxn board.
+# This program simulates two people wondering on a 2D nxn board (called a forest).
 # The program will run 3 experiments varying the board dimensions, the way the people move (protocol), and repetitions per Simulation
 # Input data is parsed through an indata.txt file, and output will be sent to outdata.txt
+# The two people lost in the woods are taking random turns to move in order to try and find the other person.
+# The people are going to be trying to find eachother given different inputs of Grid Dimension, Maximum Moves, and Movement Protocol
+# These different modifications to variables between runs will be called experiments.
+# Movement Protocol 4 allows for movement in the four cardinal directions but fails to move when trying to move outside the grid.
+# Movement Protocol 8 is like Movement Protocol 4 but allows for diagonal movement and reattempts a new move when trying to move outside of the grid.
+# We will be running 3 of these experiments based on the input data given in the file indata.txt
+# The simulations, in many cases, will be repeated multiple times for better accuracy of the results.
+# a simulation is one insteance of a random wondering test.
 
 # Each person is represented as a 1x2 array which holds their position on the board as an x and y coordinate, in that order.
 
@@ -174,10 +182,13 @@ def validateAscending(intArray):
         # break out early to avoid index out of bounds
         if(index == 4):
             return True
-
-        # checking if the integers are ascending
-        if(int(x) > int(intArray[index + 1])):
-            print("Line of integers is not ascending")
+        try:
+            # checking if the integers are ascending
+            if(int(x) > int(intArray[index + 1])):
+                print("Line of integers is not ascending")
+                return False
+        except IndexError:
+            print("The following line does not contain the correct amount of integers.")
             return False
 
     return True
@@ -213,12 +224,16 @@ def validateFile(fileIn):
     secondStr = fileIn.readline()
     secondArr = secondStr.split(',')
 
+    line2ReturnVal = True
     if(not validateInts(secondArr)):
         print("Line 2".rstrip())
-        return False
+        line2ReturnVal = False
+        print(secondArr)
     if(len(secondArr) != 3):
         print("Line 2 requires 3 integers")
         return False
+    if(not line2ReturnVal):
+        return line2ReturnVal
     if(int(secondArr[0]) != 4 and int(secondArr[0]) != 8):
         print("Line 2 protocol number must be 4 or 8")
         return False
@@ -234,16 +249,26 @@ def validateFile(fileIn):
     thirdStr = fileIn.readline()
     thirdArr = thirdStr.split(',')
 
+    line3ReturnVal = True
     if(not validateAscending(thirdArr)):
         print("Line 3".rstrip())
-        return False
+        line3ReturnVal = False
     if(len(thirdArr) != 5):
         print("Line 3 requires 5 ascending integers")
-        return False
+        line3ReturnVal = False
     for x in thirdArr:
-        if(not inputValidator(int(x), 100000, 1)):
-            print("Line 3 repetition values must be in range 1-100000")
-            return False
+        try:
+            if(not inputValidator(int(x), 100000, 1)):
+                print("Line 3 repetition values must be in range 1-100000")
+                line3ReturnVal = False
+        except ValueError:
+            print("Line 3 Invalid/Extra character in list of integers.")
+            print("Line 3 Please make sure the format follows:\"I0,I1,I2,I3,I4\"")
+            line3ReturnVal = False
+
+    # returns line 3 failure if the line is not correct
+    if(not line3ReturnVal): 
+        return line3ReturnVal
 
     # fourth line is 3 integers D, P, M
     fourthStr = fileIn.readline()
@@ -363,10 +388,20 @@ def runExperiments(dimension, protocol, moves, numberSimulations):
 # MAIN FUNCTION #
 
 # Start statement:
-print("This program is a game!")
-print("There are two people lost in the woods, imagine they are on a grid coordinate system.")
-print("The program will run 3 experiments based on the input data given in the file indata.txt")
-print("Let's begin!\n\n")
+print("This program is ment to simulate two people wondering in the woods!")
+print("Imagine the two people are on a grid coordinate system.")
+print("The two people lost in the woods are taking random turns to move in order to try and find the other person.")
+print("The people are going to be trying to find eachother given different inputs of Grid Dimension, Maximum Moves, and Movement Protocol")
+print("\tMovement Protocol 4 allows for movement in the four cardinal directions but fails to move when trying to move outside the grid.")
+print("\tMovement Protocol 8 is like Movement Protocol 4 but allows for diagonal movement and reattempts a new move when trying to move outside of the grid.")
+print("These different modifications to variables between runs will be called experiments.")
+print("We will be running 3 of these experiments based on the input data given in the file indata.txt")
+print("The simulations, in many cases, will be repeated multiple times for better accuracy of the results.")
+print("\tNote, a simulation is one insteance of a random wondering test given a dimension, maximum number of moves, and movement protocol.")
+print("\nRunning file validation...")
+
+# The simulations, in many cases, will be repeated multiple times for better accuracy of the results.
+# a simulation is one insteance of a random wondering test.
 
 try:
     # opening file and validating input data
@@ -380,6 +415,8 @@ if(not validateFile(fileIn)):
     print("Invalid input file format. Please try again.")
 else:
     fileIn.seek(0)
+    
+    print("File validated, running experiments...\n")
 
     ### EXPERIMENT 1 ###
 
@@ -423,7 +460,6 @@ else:
 
     for repetitionStr in thirdArr:
         repetitions = int(repetitionStr)
-        # if repetitions > 45000:  repetitions -= 45000
         low, high, avg = runExperiments(dimension, protocol, maxMoves, repetitions)
         fileOut.write('| %10d| %11d| %10d| %10d| %10d| %10d| %10.3f|\n' % (repetitions, dimension, maxMoves, protocol, low, high, avg))
 
@@ -453,5 +489,5 @@ else:
 
     fileOut.write('--------------------------------------------------------------------------------------\n\n')
 
-
-    print("Good-bye! Thank you for playing! <(￣︶￣)>")
+    print("The Experiments have complete and the data has been output to the file \"indata.txt\"")
+    print("Good-bye! Thank you for Experimenting! <(￣︶￣)>")
