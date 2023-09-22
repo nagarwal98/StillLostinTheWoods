@@ -199,12 +199,15 @@ def validateFile(fileIn):
     firstStr = fileIn.readline()
     firstArr = firstStr.split(',')
 
+    # Checking if integers are in ascending order, and they are actually integers
     if(not validateAscending(firstArr)):
         print("Line 1".rstrip())
         return False
+    # Checking if there are 5 and only 5 integers
     if(len(firstArr) != 5):
         print("Line 1 requires 5 ascending integers")
         return False
+    # Checking if values are in acceptable range
     for x in firstArr:
         if(not inputValidator(int(x), 99, 0)):
             print("Line 1 dimension values must be in range 0-100")
@@ -220,7 +223,7 @@ def validateFile(fileIn):
     if(len(secondArr) != 3):
         print("Line 2 requires 3 integers")
         return False
-    if(int(secondArr[0]) != 4 and int(secondArr[0] != 8)):
+    if(int(secondArr[0]) != 4 and int(secondArr[0]) != 8):
         print("Line 2 protocol number must be 4 or 8")
         return False
     if(not inputValidator(int(secondArr[1]), 1000000, 1)):
@@ -239,11 +242,11 @@ def validateFile(fileIn):
         print("Line 3".rstrip())
         return False
     if(len(thirdArr) != 5):
-        print("Third line requires 5 ascending integers")
+        print("Line 3 requires 5 ascending integers")
         return False
     for x in thirdArr:
         if(not inputValidator(int(x), 100000, 1)):
-            print("Third line repetition values must be in range 1-100000")
+            print("Line 3 repetition values must be in range 1-100000")
             return False
 
     # fourth line is 3 integers D, P, M
@@ -254,12 +257,12 @@ def validateFile(fileIn):
         print("Line 4".rstrip())
         return False
     if(len(fourthArr) != 3):
-        print("Fourth line of input requires 3 integers")
+        print("Line 4 of input requires 3 integers")
         return False
     if(not inputValidator(int(fourthArr[0]), 99, 0)):
         print("Line 4 dimension values must be in range 0-99")
         return False
-    if(int(fourthArr[1]) != 4 and int(fourthArr[1] != 8)):
+    if(int(fourthArr[1]) != 4 and int(fourthArr[1]) != 8):
         print("Line 4 protocol number must be 4 or 8")
         return False
     if(not inputValidator(int(fourthArr[2]), 1000000, 1)):
@@ -270,7 +273,7 @@ def validateFile(fileIn):
     fifthStr = fileIn.readline()
 
     if(fifthStr.rstrip() != '4,4,8,8'):
-        print("Fifth line of input must be '4,4,8,8'")
+        print("Line 5 of input must be '4,4,8,8'")
         return False
 
     # sixth line is 3 intgers D, M, R
@@ -281,7 +284,7 @@ def validateFile(fileIn):
             print("Line 6".rstrip())
             return False
     if(len(sixthArr) != 3):
-        print("Sixth line of input requires 3 integers")
+        print("Line 6 of input requires 3 integers")
         return False
     if(not inputValidator(int(sixthArr[0]), 99, 0)):
         print("Line 6 dimension values must be in range 0-99")
