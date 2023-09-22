@@ -195,7 +195,7 @@ def validateAscending(intArray):
 
 # function to validate the indata.txt file
 def validateFile(fileIn):
-    try:
+   try:
     # check to see whether the file contains 6 and only 6 lines
         lines = len(fileIn.readlines())
     except:
@@ -208,22 +208,45 @@ def validateFile(fileIn):
 
     # Reading in all lines and storing as arrays
     # first line is 5 ascending integers of dimension
-    firstStr = fileIn.readline().strip()
-    firstArr = firstStr.split(',')
+    firstStr = fileIn.readline()
     # second line is 3 integers P, M, R
-    secondStr = fileIn.readline().strip()
-    secondArr = secondStr.split(',')
+    secondStr = fileIn.readline()
     # third line is 5 ascending integers of repetitions
-    thirdStr = fileIn.readline().strip()
-    thirdArr = thirdStr.split(',')
+    thirdStr = fileIn.readline()
     # fourth line is 3 integers D, P, M
-    fourthStr = fileIn.readline().strip()
-    fourthArr = fourthStr.split(',')
+    fourthStr = fileIn.readline()
     # fifth line is protocols 4,4,8,8
-    fifthStr = fileIn.readline().strip()
+    fifthStr = fileIn.readline()
     # sixth line is 3 intgers D, M, R
-    sixthStr = fileIn.readline().strip()
-    sixthArr = sixthStr.split(',')
+    sixthStr = fileIn.readline()
+
+
+    # Checking for whitespace in each line
+    if(' ' in firstStr):
+        print("Line 1 cannot contain any whitespace")
+        return False
+    if(' ' in secondStr):
+        print("Line 2 cannot contain any whitespace")
+        return False
+    if(' ' in thirdStr):
+        print("Line 3 cannot contain any whitespace")
+        return False
+    if(' ' in fourthStr):
+        print("Line 4 cannot contain any whitespace")
+        return False
+    if(' ' in fifthStr):
+        print("Line 5 cannot contain any whitespace")
+        return False
+    if(' ' in sixthStr or '\n' in sixthStr):
+        print("Line 6 cannot contain any whitespace or newline characters")
+        return False
+
+
+    firstArr = firstStr.strip().split(',')
+    secondArr = secondStr.strip().split(',')
+    thirdArr = thirdStr.strip().split(',')
+    fourthArr = fourthStr.strip().split(',')
+    sixthArr = sixthStr.strip().split(',')
 
 
     # Checking if each line length is correct
