@@ -430,8 +430,8 @@ else:
     for dimensionStr in firstArr:
         dimension = int(dimensionStr)
         low, high, avg = runExperiments(dimension, protocol, maxMoves, repetitions)
-        print('| %10d| %10d| %10d| %10d| %10d| %10d| %10f|' % (dimension, maxMoves, repetitions, protocol, low, high, avg))
-        fileOut.write('| %10d| %10d| %10d| %10d| %10d| %10d| %10f|\n' % (dimension, maxMoves, repetitions, protocol, low, high, avg))
+        print('| %10d| %10d| %10d| %10d| %10d| %10d| %10.3f|' % (dimension, maxMoves, repetitions, protocol, low, high, avg))
+        fileOut.write('| %10d| %10d| %10d| %10d| %10d| %10d| %10.3f|\n' % (dimension, maxMoves, repetitions, protocol, low, high, avg))
 
     print('-------------------------------------------------------------------------------------\n')
     fileOut.write('-------------------------------------------------------------------------------------\n\n')
@@ -462,8 +462,8 @@ else:
         repetitions = int(repetitionStr)
         # if repetitions > 45000:  repetitions -= 45000
         low, high, avg = runExperiments(dimension, protocol, maxMoves, repetitions)
-        print('| %10d| %11d| %10d| %10d| %10d| %10d| %10f|' % (repetitions, dimension, maxMoves, protocol, low, high, avg))
-        fileOut.write('| %10d| %11d| %10d| %10d| %10d| %10d| %10f|\n' % (repetitions, dimension, maxMoves, protocol, low, high, avg))
+        print('| %10d| %11d| %10d| %10d| %10d| %10d| %10.3f|' % (repetitions, dimension, maxMoves, protocol, low, high, avg))
+        fileOut.write('| %10d| %11d| %10d| %10d| %10d| %10d| %10.3f|\n' % (repetitions, dimension, maxMoves, protocol, low, high, avg))
         
     print('--------------------------------------------------------------------------------------\n')
     fileOut.write('--------------------------------------------------------------------------------------\n\n')
@@ -493,8 +493,8 @@ else:
     for protocolStr in fifthArr:
         protocol = int(protocolStr)
         low, high, avg = runExperiments(dimension, protocol, maxMoves, repetitions)
-        print('| %10d| %11d| %10d| %10d| %10d| %10d| %10f|' % (protocol, dimension, maxMoves, repetitions, low, high, avg))
-        fileOut.write('| %10d| %11d| %10d| %10d| %10d| %10d| %10f|\n' % (protocol, dimension, maxMoves, repetitions, low, high, avg))
+        print('| %10d| %11d| %10d| %10d| %10d| %10d| %10.3f|' % (protocol, dimension, maxMoves, repetitions, low, high, avg))
+        fileOut.write('| %10d| %11d| %10d| %10d| %10d| %10d| %10.3f|\n' % (protocol, dimension, maxMoves, repetitions, low, high, avg))
         
     print('--------------------------------------------------------------------------------------\n')
     fileOut.write('--------------------------------------------------------------------------------------\n\n')
