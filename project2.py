@@ -195,7 +195,7 @@ def validateAscending(intArray):
 
 # function to validate the indata.txt file
 def validateFile(fileIn):
-   try:
+    try:
     # check to see whether the file contains 6 and only 6 lines
         lines = len(fileIn.readlines())
     except:
@@ -237,10 +237,12 @@ def validateFile(fileIn):
     if(' ' in fifthStr):
         print("Line 5 cannot contain any whitespace")
         return False
-    if(' ' in sixthStr or '\n' in sixthStr):
-        print("Line 6 cannot contain any whitespace or newline characters")
+    if(' ' in sixthStr):
+        print("Line 6 cannot contain any whitespace")
         return False
-
+    if('\n' in sixthStr):
+        print("Line 6 cannot contain any newline characters")
+        return False
 
     firstArr = firstStr.strip().split(',')
     secondArr = secondStr.strip().split(',')
@@ -294,7 +296,7 @@ def validateFile(fileIn):
     # Line 1
     for x in firstArr:
         if(not inputValidator(int(x), 99, 0)):
-            print("Line 1 dimension values must be in range 0-100")
+            print("Line 1 dimension values must be in range 0-99")
             return False
     # Line 2
     if(int(secondArr[0]) != 4 and int(secondArr[0]) != 8):
@@ -304,7 +306,7 @@ def validateFile(fileIn):
         print("Line 2 max moves must be in range 1-1000000")
         return False
     if(not inputValidator(int(secondArr[2]), 100000, 1)):
-        print("Line 2 repetition values must be in range 1-100000")
+        print("Line 2 repetition value must be in range 1-100000")
         return False
     # Line 3
     for x in thirdArr:
@@ -313,7 +315,7 @@ def validateFile(fileIn):
             return False
     # Line 4
     if(not inputValidator(int(fourthArr[0]), 99, 0)):
-        print("Line 4 dimension values must be in range 0-99")
+        print("Line 4 dimension value must be in range 0-99")
         return False
     if(int(fourthArr[1]) != 4 and int(fourthArr[1]) != 8):
         print("Line 4 protocol number must be 4 or 8")
@@ -323,13 +325,13 @@ def validateFile(fileIn):
         return False
     # Line 6
     if(not inputValidator(int(sixthArr[0]), 99, 0)):
-        print("Line 6 dimension values must be in range 0-99")
+        print("Line 6 dimension value must be in range 0-99")
         return False
     if(not inputValidator(int(sixthArr[1]), 1000000, 1)):
         print("Line 6 max moves must be in range 1-1000000")
         return False
     if(not inputValidator(int(sixthArr[2]), 100000, 1)):
-        print("Line 6 repetition values must be in range 1-100000")
+        print("Line 6 repetition value must be in range 1-100000")
         return False
 
     return True
